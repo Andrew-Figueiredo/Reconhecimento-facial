@@ -1,0 +1,8 @@
+.vscode
+opencv-master
+*.jpg
+*.png
+*.xml
+*.dat
+*.dat.bz2
+*.mp4
