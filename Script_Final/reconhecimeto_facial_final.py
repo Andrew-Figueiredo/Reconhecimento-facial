@@ -1,18 +1,31 @@
 import cv2
 import numpy as np
+from time import sleep
 
-body_classfier = cv2.CascadeClassifier('\haarcascade_frontalface_alt2.xml')
+COLOR = (255, 0, 0)
+STROKE = 2
+COUNT = 0
 
-video_capture = cv2.VideoCapture(0)
+xml_path = 'haarcascade_frontalface_default.xml'
+repo_registros = ''#'Script_Final/Registros/'
 
-while True:
-    # Grab a single frame of video
-    ret, frame = video_capture.read()
-    cv2.imshow('Video', frame)
+clf = cv2.CascadeClassifier(cv2.data.haarcascades + xml_path)
+cap = cv2.VideoCapture(0)
 
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-
-# Release handle to the webcam
-video_capture.release()
+while (not cv2.waitKey(20) & 0xFF == ord('q')):
+    ret, frame = cap.read()
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    
+    faces = clf.detectMultiScale(gray)
+    # Quando encontrar um rosto
+    if faces != ():
+        x,y,w,h = faces[0]
+        cv2.rectangle(frame, (x, y), (x+w, y+h), COLOR, STROKE)
+        cv2.imwrite(repo_registros + 'opencv_'+str(faces)+'.png',frame)
+        print(f"Detectei!! ${faces}")
+        sleep(3)
+    # for x,y,w,h in faces:
+    #     cv2.rectangle(frame, (x, y), (x+w, y+h), COLOR, STROKE)
+    # cv2.imshow('Video', frame)
+cap.release()
 cv2.destroyAllWindows()
