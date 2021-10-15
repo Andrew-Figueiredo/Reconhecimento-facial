@@ -7,7 +7,6 @@ STROKE = 2
 COUNT = 0
 
 xml_path = 'haarcascade_frontalface_default.xml'
-repo_registros = ''#'Script_Final/Registros/'
 
 clf = cv2.CascadeClassifier(cv2.data.haarcascades + xml_path)
 cap = cv2.VideoCapture(0)
@@ -21,7 +20,7 @@ while (not cv2.waitKey(20) & 0xFF == ord('q')):
     if faces != ():
         x,y,w,h = faces[0]
         cv2.rectangle(frame, (x, y), (x+w, y+h), COLOR, STROKE)
-        cv2.imwrite(repo_registros + 'opencv_'+str(faces)+'.png',frame)
+        cv2.imwrite('opencv_'+str(faces)+'.png',frame)
         print(f"Detectei!! ${faces}")
         sleep(3)
     # for x,y,w,h in faces:
